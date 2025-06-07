@@ -1,10 +1,12 @@
+BOARD_HAVE_CAMERA := false
 USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
 -include vendor/lge/e400/BoardConfigVendor.mk
 
 TARGET_NO_BOOTLOADER := true
-TARGET_BOARD_PLATFORM := msm7x27a
+# Info abt chipset(msm7x27a)
+TARGET_BOARD_PLATFORM := msm7k
 TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 TARGET_CPU_ABI := armeabi-v7a
@@ -29,8 +31,13 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 392167424
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 164626432
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-TARGET_KERNEL_CONFIG := cyanogenmod_e0_defconfig
+# TARGET_KERNEL_SOURCE := kernel/lge/e400
+# TARGET_KERNEL_CONFIG := cyanogenmod_e0_defconfig
 TARGET_PREBUILT_KERNEL := device/lge/e400/kernel
+
+TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
+BOARD_NO_RGBX_8888 := true
+BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -40,41 +47,64 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_ROTATOR_KERNEL_FORMATS
 
 TARGET_SPECIFIC_HEADER_PATH := device/lge/e400/include
 
-USE_OPENGL_RENDERER := true
+TARGET_USES_OLD_LIBSENSORS_HAL:=true
+
+#recovery
+BOARD_LDPI_RECOVERY := true
+BOARD_HAS_JANKY_BACKBUFFER := true
+BOARD_CUSTOM_GRAPHICS           := ../../../device/lge/e400/recovery/graphics.c
 
 # QCOM stuffs
 BOARD_USES_QCOM_HARDWARE := true
-TARGET_USES_OVERLAY := false
-TARGET_HAVE_BYPASS  := false
-TARGET_USES_C2D_COMPOSITION := true
-TARGET_USES_GENLOCK := true
-TARGET_QCOM_HDMI_OUT := false
-TARGET_FORCE_CPU_UPLOAD := true
 BOARD_USES_QCOM_LIBS := true
 BOARD_USE_QCOM_PMEM := true
 BOARD_EGL_CFG := device/lge/e400/egl.cfg
-TARGET_GRALLOC_USES_ASHMEM := true
 
 BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_BCM := true
+
+TARGET_PROVIDES_LIBAUDIO := true
+TARGET_PROVIDES_LIBRIL := true
 
 # to enable the GPS HAL
 BOARD_USES_QCOM_LIBRPC := true
+BOARD_GPS_LIBRARIES := libgps librpc
 BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := e400
 # AMSS version to use for GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
 
+BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+BOARD_CUSTOM_USB_CONTROLLER := ../../device/lge/e400/UsbController.cpp
+BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
+
+# BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+# WPA_SUPPLICANT_VERSION      := VER_0_6_X
+# BOARD_WLAN_DEVICE           := bcm4329
+# WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4330.ko"
+# WIFI_DRIVER_FW_STA_PATH     := "/system/etc/firmware/fw_bcm4330b2.bin"
+# WIFI_DRIVER_FW_AP_PATH      := "/system/etc/firmware/fw_bcm4330b2_apsta.bin"
+# WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/firmware/fw_bcm4330b2.bin nvram_path=/proc/calibration"
+# WIFI_DRIVER_MODULE_NAME     := "bcm4330"
+
 BOARD_WLAN_DEVICE := qcwcn
-WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
+# WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
 WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
-WIFI_EXT_MODULE_NAME := librasdioif
+# WIFI_EXT_MODULE_NAME := librasdioif
 WIFI_DRIVER_MODULE_NAME := wlan
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
-WPA_SUPPLICANT_VERSION := VER_0_8_X
+WPA_SUPPLICANT_VERSION := VER_0_6_X
+WIFI_DRIVER_HAS_LGE_SOFTAP      := true
 BOARD_WEXT_NO_COMBO_SCAN := true
 
+WITH_JIT := true
+ENABLE_JSC_JIT := true
+JS_ENGINE := v8
+
 BOARD_VOLD_MAX_PARTITIONS := 22
+
+BOARD_HAVE_FM_RADIO := true
+BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
 COMMON_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHARGING_CMDLINE_VALUE='"pwroff"'

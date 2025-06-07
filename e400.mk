@@ -16,6 +16,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_AAPT_CONFIG := normal mdpi ldpi
 PRODUCT_AAPT_PREF_CONFIG := ldpi
 
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+	LOCAL_KERNEL := device/lge/p350/kernel
+else
+	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_KERNEL):kernel
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.e0.rc:root/init.e0.rc \
     $(LOCAL_PATH)/ueventd.e0.rc:root/ueventd.e0.rc \
@@ -67,24 +76,16 @@ PRODUCT_COPY_FILES += \
 
 # HW HALS
 PRODUCT_PACKAGES += \
-    libgenlock \
-    liboverlay \
-    gralloc.msm7x27a \
-    hwcomposer.msm7x27a \
-    copybit.msm7x27a \
-    camera.e400 \
+    libaudio \
     gps.e400 \
-    audio.a2dp.default \
-    audio.primary.msm7x27a \
-    audio_policy.msm7x27a \
     charger \
     charger_res_images
 
 # OMX 
 PRODUCT_PACKAGES += \
-    libstagefrighthw \
-    libmm-omxcore \
     libOmxCore
+
+PRODUCT_LOCALES += ldpi mdpi
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_e400
