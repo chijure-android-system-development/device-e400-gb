@@ -47,6 +47,7 @@ bin/qmuxd
 bin/qmiproxy
 bin/netmgrd
 bin/rild
+bin/rmt_storage
 lib/libril.so
 lib/libmm-adspsvc.so
 lib/libdivxdrmdecrypt.so

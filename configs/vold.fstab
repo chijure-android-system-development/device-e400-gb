@@ -1,13 +1,2 @@
-# SD externa — Tarjeta microSD del usuario
-# dev_mount sdcard /mnt/sdcard auto /devices/platform/msm_sdcc.2/mmc_host
-
-# SD interna — Almacenamiento interno del sistema
-# dev_mount sdcard2 /mnt/sdcard2 auto /devices/platform/msm_sdcc.3/mmc_host
-
-# dev_mount sdcard /mnt/sdcard auto /devices/platform/msm_sdcc.3/mmc_host
-# dev_mount extsdcard /mnt/sdcard/_ExternalSD auto /devices/platform/msm_sdcc.1/mmc_host
-
-# dev_mount sdcard /mnt/sdcard auto /devices/platform/goldfish_mmc.0 /devices/platform/msm_sdcc.1/mmc_host/mmc0
-
 dev_mount sdcard /mnt/sdcard 20 /devices/platform/msm_sdcc.3/mmc_host
 dev_mount extsdcard /mnt/extra-sd auto /devices/platform/msm_sdcc.1/mmc_host
