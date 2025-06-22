@@ -14,10 +14,24 @@ on init
 
 
 on fs
-    # Montaje de particiones básicas
-    mount ext4 /dev/block/mmcblk0p16 /cache wait nosuid nodev noatime
-    mount ext4 /dev/block/mmcblk0p14 /system wait ro
-    mount ext4 /dev/block/mmcblk0p21 /data wait nosuid nodev noatime
+# mount mmc partitions
+    wait /dev/block/mmcblk0p14
+    mount ext4 /dev/block/mmcblk0p14 /system data=ordered,barrier=1
+    symlink /data/misc/wifi/WCN1314_qcom_cfg.ini /system/etc/firmware/wlan/volans/WCN1314_qcom_cfg.ini
+    mount ext4 /dev/block/mmcblk0p14 /system remount ro data=ordered,barrier=1
+    wait /dev/block/mmcblk0p15
+    exec /system/bin/demigod_make_ext4fs -e /dev/block/mmcblk0p15 /persist
+    exec /system/bin/e2fsck -p /dev/block/mmcblk0p15
+    mount ext4 /dev/block/mmcblk0p15 /persist nosuid nodev data=ordered,barrier=1
+
+    wait /dev/block/mmcblk0p16
+    exec /system/bin/demigod_make_ext4fs -e /dev/block/mmcblk0p16 /cache
+    exec /system/bin/e2fsck -p /dev/block/mmcblk0p16
+    mount ext4 /dev/block/mmcblk0p16 /cache nosuid nodev data=ordered,barrier=1
+
+    #setprop ro.crypto.fuse_sdcard true
+    wait /dev/block/mmcblk0p21
+    mount ext4 /dev/block/mmcblk0p21 /data nosuid nodev noatime barrier=1,data=ordered,noauto_da_alloc,errors=continue
 
 # LGE_CHANGE_E [jyothishre.nk@lge.com] 20120215
 on post-fs
@@ -259,18 +273,3 @@ service charger /charger
 
 on property:init.svc.charger=running
     exec /system/bin/chgchk
-
-service console /system/bin/sh
-    class core
-    console
-    disabled
-    user shell
-    group shell log
-
-service adbd /sbin/adbd
-    class core
-    disabled
-    oneshot
-
-on property:ro.debuggable=1
-    start adbd
