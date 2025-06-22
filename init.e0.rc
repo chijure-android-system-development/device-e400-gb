@@ -1,19 +1,16 @@
-on early-init
-    start ueventd
+import init.e0.usb.rc
 
 on init
-    # Configuración base
-    setprop ro.hardware e0
-    setprop ro.secure 0
-    setprop ro.debuggable 1
-    setprop persist.service.adb.enable 1
-    setprop vold.debug 1
-
     export TMPDIR /data/local/tmp
     export EXTERNAL_STORAGE /mnt/sdcard
 
-    sysclktz 0
-    loglevel 3
+# Backward compatibility
+    symlink /system/bin /bin
+
+# create mountpoints for storage
+    mkdir /mnt/sdcard 0000 system system
+    mkdir /mnt/extra-sd 0000 system system
+    symlink /mnt/sdcard /sdcard
 
 
 on fs
@@ -22,12 +19,87 @@ on fs
     mount ext4 /dev/block/mmcblk0p14 /system wait ro
     mount ext4 /dev/block/mmcblk0p21 /data wait nosuid nodev noatime
 
+# LGE_CHANGE_E [jyothishre.nk@lge.com] 20120215
 on post-fs
-# create mountpoints for storage
-    mkdir /mnt/sdcard 0000 system system
-    mkdir /mnt/extra-sd 0000 system system
-    symlink /mnt/sdcard /sdcard
+## murali.raramiah@lge.com [2011-07-26] - Referred from Victor model
+    start rmt_storage
+# msm specific files that need to be created on /data
 
+on post-fs-data
+    mkdir /data/radio 0770 radio radio
+    # we will remap this as /mnt/sdcard with the sdcard fuse tool
+    mkdir /data/media 0775 media_rw media_rw
+    chown media_rw media_rw /data/media
+
+#+s LGBT_COMMON_FUNCTION_BRINGUP - jeonghoon.lim@lge.com 2011-12-10
+    mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
+    mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth    #moved from init.rc - jeonghoon.lim@lge.com
+#+e LGBT_COMMON_FUNCTION_BRINGUP
+        mkdir /data/misc/wifi 0775 wifi radio
+    mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/wpa_supplicant 0770 wifi wifi
+    mkdir /data/misc/dhcp 0770 dhcp dhcp
+    chown dhcp dhcp /data/misc/dhcp
+
+
+    # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
+    # We chown/chmod /persist again so because mount is run as root + defaults
+    chown system system /persist
+    chmod 0771 /persist
+    chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
+    chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
+    chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
+    chmod 0664 /sys/devices/platform/msm_sdcc.4/polling
+    # Chown polling nodes as needed from UI running on system server
+    chown system system /sys/devices/platform/msm_sdcc.1/polling
+    chown system system /sys/devices/platform/msm_sdcc.2/polling
+    chown system system /sys/devices/platform/msm_sdcc.3/polling
+    chown system system /sys/devices/platform/msm_sdcc.4/polling
+
+   #Write Permissions to Owner & Group. Make system as Owner & Group.
+    chmod 0664 /sys/devices/platform/msm-battery/chg_current_change
+    chown system system /sys/devices/platform/msm-battery/chg_current_change
+    #Create the symlink to qcn wpa_supplicant folder for ar6000 wpa_supplicant
+    mkdir /data/system 0775 system system
+
+    #Create directories for wiper services
+    mkdir /data/wpstiles/ 0755 shell
+    mkdir /data/wiper 0755 location qcom_oncrpc
+
+    #Create directories for gpsone_daemon services
+    mkdir /data/misc/gpsone_d 0770 system system
+
+    #Create directories for QuIPS
+    mkdir /data/misc/quipc 0770 gps system
+
+    #Create directory from IMS services
+    mkdir /data/shared 0755
+
+    #Provide the access to hostapd.conf only to root and group
+    chmod 0660 /data/hostapd/hostapd.conf
+
+    # Create /data/time folder for time-services
+    mkdir /data/time/ 0700 system system
+    mkdir /data/fpri 0777 system system
+    copy /proc/last_kmsg /data/dontpanic/last_kmsg
+    chown root log /data/dontpanic/last_kmsg
+    chmod 0640 /data/dontpanic/last_kmsg
+
+    # Create directories for wiper services
+    mkdir /data/wpstiles/ 0755 shell
+    mkdir /data/wiper 0755 location qcom_oncrpc
+
+     # Create directories for gpsone_daemon services
+    mkdir /data/misc/gpsone_d 0770 gpsone_d qcom_oncrpc
+
+     # Create directory from IMS services
+    mkdir /data/shared 0755
+
+    # Log Service [START]
+    mkdir /data/logger 0771 system system
+    chown system system /data/logger
+    chmod 0771 /data/logger
+    # Log Service [END]
 on post-fs-data
     mkdir /data/misc 01771 system misc
     mkdir /data/misc/bluetoothd 0770 bluetooth bluetooth
@@ -44,6 +116,11 @@ on boot
     hostname localhost
     domainname localdomain
     class_start core
+
+service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmcblk0p11 /dev/block/mmcblk0p17
+    class core
+    user root
+    disabled
 
 service console /system/bin/sh
     class core
