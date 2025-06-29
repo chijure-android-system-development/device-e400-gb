@@ -139,20 +139,6 @@
 #regular apps need to be able to open ion
 /dev/ion                  0664   system     system
 
-# Dispositivos principales para SDs
-/dev/block/mmcblk0       0660 root mount
-/dev/block/mmcblk0p1     0660 root mount
-/dev/block/mmcblk1       0660 root mount
-/dev/block/mmcblk1p1     0660 root mount
-
-# Compatibilidad
-/dev/block/mmcblk*       0660 root mount
-/dev/block/vold*         0660 root mount
-
-# Otros dispositivos útiles
-/dev/block/loop*         0660 root mount
-/dev/block/ram*          0660 root mount
-
 # CDMA radio interface MUX
 /dev/ts0710mux*           0640   radio      radio
 /dev/ppp                  0660   radio      vpn

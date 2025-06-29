@@ -3,6 +3,10 @@ import init.e0.usb.rc
 on init
     export TMPDIR /data/local/tmp
     export EXTERNAL_STORAGE /mnt/sdcard
+    chmod 0666 /dev/graphics/fb0
+    chmod 0666 /dev/pmem* 
+    chmod 0666 /dev/ion
+    chmod 0666 /dev/msm_hw3dc
 
 # Backward compatibility
     symlink /system/bin /bin
@@ -205,10 +209,11 @@ service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmc
     user root
     disabled
 
+## LGE_CHANGE_S, U0/E0-SENSOR [seven.kim@lge.com] 2011-09-96
+# compass/accelerometer daemon for U0
 service sensord /system/bin/sensord
 #   user compass
 #   group compass misc input
-   class late_start
    oneshot
 ## LGE_CHANGE_E
 
