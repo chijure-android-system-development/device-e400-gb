@@ -77,8 +77,8 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libaudio \
     liboverlay \
-    gralloc.msm7k \
-    copybit.msm7k \
+    gralloc.e400 \
+    copybit.e400 \
     gps.e400 \
     charger \
     charger_res_images

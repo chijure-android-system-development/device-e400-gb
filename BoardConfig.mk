@@ -1,5 +1,6 @@
 BOARD_HAVE_CAMERA := false
 USE_CAMERA_STUB := true
+COPYBIT_MSM7K := true
 
 # inherit from the proprietary version
 -include vendor/lge/e400/BoardConfigVendor.mk
@@ -36,8 +37,8 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_PREBUILT_KERNEL := device/lge/e400/kernel
 
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
-BOARD_NO_RGBX_8888 := true
-BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
+# BOARD_NO_RGBX_8888 := true
+# BOARD_USE_NASTY_PTHREAD_CREATE_HACK := true
 
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -57,7 +58,6 @@ BOARD_CUSTOM_GRAPHICS           := ../../../device/lge/e400/recovery/graphics.c
 # QCOM stuffs
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
-BOARD_USE_QCOM_PMEM := true
 BOARD_EGL_CFG := device/lge/e400/egl.cfg
 
 BOARD_HAVE_BLUETOOTH := true
