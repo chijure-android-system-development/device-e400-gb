@@ -23,6 +23,7 @@ ro.telephony.ril_class=LGEQualcommUiccRIL
 ro.telephony.default_network=0
 telephony.lteOnGsmDevice=0
 
+# Mount the internal SD card, too
 ro.additionalmounts=/mnt/extra-sd
 ro.vold.switchablepair=/mnt/sdcard,/mnt/extra-sd
 

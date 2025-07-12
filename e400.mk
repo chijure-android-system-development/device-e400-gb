@@ -41,7 +41,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
 
-$(call inherit-product, build/target/product/full.mk)
+$(call inherit-product, build/target/product/full_base.mk)
 
 # Permission files
 PRODUCT_COPY_FILES += \
@@ -76,18 +76,22 @@ PRODUCT_COPY_FILES += \
 # HW HALS
 PRODUCT_PACKAGES += \
     libaudio \
+    liboverlay \
+    gralloc.msm7k \
+    copybit.msm7k \
     gps.e400 \
     charger \
     charger_res_images
 
 # OMX 
 PRODUCT_PACKAGES += \
+    libstagefrighthw \
+    libmm-omxcore \
     libOmxCore
 
 PRODUCT_LOCALES += ldpi mdpi
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
-PRODUCT_NAME := full_e400
+PRODUCT_NAME := e400
 PRODUCT_DEVICE := e400
 PRODUCT_MODEL := LG-E400
-PRODUCT_MANUFACTURER := LGE

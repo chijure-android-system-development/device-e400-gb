@@ -1,2 +1,12 @@
-dev_mount sdcard /mnt/sdcard 20 /devices/platform/msm_sdcc.3/mmc_host
-dev_mount extsdcard /mnt/extra-sd auto /devices/platform/msm_sdcc.1/mmc_host
+#######################
+## Regular device mount
+##
+## Format: dev_mount <label> <mount_point> <part> <sysfs_path1...>
+## label        - Label for the volume
+## mount_point  - Where the volume will be mounted
+## part         - Partition # (1 based), or 'auto' for first usable partition.
+## <sysfs_path> - List of sysfs paths to source devices
+######################
+
+dev_mount emmc /mnt/sdcard 20 /devices/platform/msm_sdcc.3/mmc_host
+dev_mount sdcard /mnt/extra-sd auto /devices/platform/msm_sdcc.1/mmc_host

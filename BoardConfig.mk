@@ -47,7 +47,7 @@ COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_ROTATOR_KERNEL_FORMATS
 
 TARGET_SPECIFIC_HEADER_PATH := device/lge/e400/include
 
-TARGET_USES_OLD_LIBSENSORS_HAL:=true
+# TARGET_USES_OLD_LIBSENSORS_HAL:=true
 
 #recovery
 BOARD_LDPI_RECOVERY := true
@@ -78,24 +78,17 @@ BOARD_USE_USB_MASS_STORAGE_SWITCH := true
 BOARD_CUSTOM_USB_CONTROLLER := ../../device/lge/e400/UsbController.cpp
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
-# BOARD_WPA_SUPPLICANT_DRIVER := WEXT
-# WPA_SUPPLICANT_VERSION      := VER_0_6_X
-# BOARD_WLAN_DEVICE           := bcm4329
-# WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcm4330.ko"
-# WIFI_DRIVER_FW_STA_PATH     := "/system/etc/firmware/fw_bcm4330b2.bin"
-# WIFI_DRIVER_FW_AP_PATH      := "/system/etc/firmware/fw_bcm4330b2_apsta.bin"
-# WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/firmware/fw_bcm4330b2.bin nvram_path=/proc/calibration"
-# WIFI_DRIVER_MODULE_NAME     := "bcm4330"
-
-BOARD_WLAN_DEVICE := qcwcn
-# WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
-WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
-# WIFI_EXT_MODULE_NAME := librasdioif
-WIFI_DRIVER_MODULE_NAME := wlan
-BOARD_WPA_SUPPLICANT_DRIVER := WEXT
-WPA_SUPPLICANT_VERSION := VER_0_6_X
+# Wifi related defines
+BOARD_WLAN_DEVICE               := bcm4330
+WIFI_DRIVER_FW_STA_PATH         := "/system/etc/wl/rtecdc.bin"
+WIFI_DRIVER_FW_AP_PATH          := "/system/etc/wl/rtecdc-apsta.bin"
+WIFI_DRIVER_MODULE_NAME         := "wireless"
+WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko"
+WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
+WPA_SUPPLICANT_VERSION          := VER_0_6_X
 WIFI_DRIVER_HAS_LGE_SOFTAP      := true
-BOARD_WEXT_NO_COMBO_SCAN := true
+BOARD_WEXT_NO_COMBO_SCAN        := true
+BOARD_WPA_SUPPLICANT_DRIVER     := WEXT
 
 WITH_JIT := true
 ENABLE_JSC_JIT := true

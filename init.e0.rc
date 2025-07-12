@@ -16,6 +16,8 @@ on init
     mkdir /mnt/extra-sd 0000 system system
     symlink /mnt/sdcard /sdcard
 
+on early-init
+    start hwprops
 
 on fs
 # mount mmc partitions
@@ -204,8 +206,7 @@ on boot
 # Fix FFC
     write /proc/sys/kernel/randomize_va_space 1
 
-service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmcblk0p11 /dev/block/mmcblk0p17
-    class core
+service rmt_storage /system/bin/rmt_storage /dev/block/mmcblk0p10 /dev/block/mmcblk0p11
     user root
     disabled
 
@@ -217,8 +218,9 @@ service sensord /system/bin/sensord
    oneshot
 ## LGE_CHANGE_E
 
-on property:gsm.version.baseband=""
-    exec /system/bin/hwprops
+service hwprops /system/bin/hwprops
+    disabled
+    oneshot
 
 ## WLAN
 service wpa_supplicant /system/bin/logwrapper /system/bin/wpa_supplicant -Dwext -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf
@@ -265,10 +267,10 @@ service netmgrd /system/bin/netmgrd
     class late_start
 
 service hciattach /system/bin/logwrapper /system/bin/sh /system/etc/init.qcom.bt.sh
-    class main
     user bluetooth
     group qcom_oncrpc bluetooth net_bt_admin
     disabled
+    oneshot
 
 service charger /charger
     class charger
