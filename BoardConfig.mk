@@ -1,5 +1,5 @@
-BOARD_HAVE_CAMERA := false
-USE_CAMERA_STUB := true
+# USE_CAMERA_STUB := true
+
 COPYBIT_MSM7K := true
 
 # inherit from the proprietary version
@@ -32,8 +32,6 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 392167424
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 164626432
 BOARD_FLASH_BLOCK_SIZE := 131072
 
-# TARGET_KERNEL_SOURCE := kernel/lge/e400
-# TARGET_KERNEL_CONFIG := cyanogenmod_e0_defconfig
 TARGET_PREBUILT_KERNEL := device/lge/e400/kernel
 
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
@@ -44,7 +42,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := '"font_7x16.h"'
 
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_ROTATOR_KERNEL_FORMATS
+# COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE -DQCOM_ROTATOR_KERNEL_FORMATS
 
 TARGET_SPECIFIC_HEADER_PATH := device/lge/e400/include
 
@@ -56,8 +54,13 @@ BOARD_HAS_JANKY_BACKBUFFER := true
 BOARD_CUSTOM_GRAPHICS           := ../../../device/lge/e400/recovery/graphics.c
 
 # QCOM stuffs
+USE_OPENGL_RENDERER := true
 BOARD_USES_QCOM_HARDWARE := true
-BOARD_USES_QCOM_LIBS := true
+TARGET_USES_GL_VENDOR_EXTENSIONS := true
+BOARD_NO_RGBX_8888 := true
+TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
+TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
+BOARD_AVOID_DRAW_TEXTURE_EXTENSION := true
 BOARD_EGL_CFG := device/lge/e400/egl.cfg
 
 BOARD_HAVE_BLUETOOTH := true
@@ -79,16 +82,24 @@ BOARD_CUSTOM_USB_CONTROLLER := ../../device/lge/e400/UsbController.cpp
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
 # Wifi related defines
-BOARD_WLAN_DEVICE               := bcm4330
-WIFI_DRIVER_FW_STA_PATH         := "/system/etc/wl/rtecdc.bin"
-WIFI_DRIVER_FW_AP_PATH          := "/system/etc/wl/rtecdc-apsta.bin"
-WIFI_DRIVER_MODULE_NAME         := "wireless"
-WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/wireless.ko"
-WIFI_DRIVER_MODULE_ARG          := "firmware_path=/etc/wl/rtecdc.bin nvram_path=/etc/wl/nvram.txt config_path=/data/misc/wifi/config"
-WPA_SUPPLICANT_VERSION          := VER_0_6_X
-WIFI_DRIVER_HAS_LGE_SOFTAP      := true
-BOARD_WEXT_NO_COMBO_SCAN        := true
-BOARD_WPA_SUPPLICANT_DRIVER     := WEXT
+# BOARD_WLAN_DEVICE := qcwcn
+# WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
+# WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
+# WIFI_EXT_MODULE_NAME := librasdioif
+# WIFI_DRIVER_MODULE_NAME := wlan
+# BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
+# BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+# WPA_SUPPLICANT_VERSION := VER_0_8_X
+# BOARD_WEXT_NO_COMBO_SCAN := true
+BOARD_WLAN_DEVICE := qcwcn
+WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
+WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
+WIFI_EXT_MODULE_NAME := librasdioif
+WIFI_DRIVER_MODULE_NAME := wlan
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
+BOARD_WPA_SUPPLICANT_DRIVER := WEXT
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+BOARD_WEXT_NO_COMBO_SCAN := true
 
 WITH_JIT := true
 ENABLE_JSC_JIT := true
@@ -99,4 +110,4 @@ BOARD_VOLD_MAX_PARTITIONS := 22
 # BOARD_HAVE_FM_RADIO := true
 # BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 
-COMMON_GLOBAL_CFLAGS += -DBOARD_CHARGING_CMDLINE_NAME='"lge.reboot"' -DBOARD_CHARGING_CMDLINE_VALUE='"pwroff"'
+BOARD_GLOBAL_CFLAGS += -DCHARGERMODE_CMDLINE_NAME='"lge.reboot"' -DCHARGERMODE_CMDLINE_VALUE='"pwroff"'

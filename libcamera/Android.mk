@@ -1,4 +1,4 @@
-ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),e400)
+ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),p350)
 
 # When zero we link against libmmcamera; when 1, we dlopen libmmcamera.
 DLOPEN_LIBMMCAMERA:=1

@@ -125,7 +125,10 @@ static int get_format(int format) {
     case COPYBIT_FORMAT_RGBA_8888:     return MDP_RGBA_8888;
     case COPYBIT_FORMAT_BGRA_8888:     return MDP_BGRA_8888;
     //case COPYBIT_FORMAT_YCrCb_422_SP:  return MDP_Y_CBCR_H2V1;
-    case COPYBIT_FORMAT_YCrCb_420_SP:  return MDP_Y_CBCR_H2V2;
+    // NV21 (YCrCb 4:2:0 SP) -> CrCb order
+    case COPYBIT_FORMAT_YCrCb_420_SP:  return MDP_Y_CRCB_H2V2;
+    // Si alguna ruta usa NV12 explícito, mapéalo también:
+    // case COPYBIT_FORMAT_YCbCr_420_SP:  return MDP_Y_CBCR_H2V2;
     case COPYBIT_FORMAT_YCbCr_422_SP:  return MDP_Y_CRCB_H2V1;
     //case COPYBIT_FORMAT_YCbCr_420_SP:  return MDP_Y_CRCB_H2V2;
     }
@@ -186,7 +189,13 @@ static void set_rects(struct copybit_context_t *dev,
         H = dst->b - dst->t;
     }
     MULDIV(&e->src_rect.x, &e->src_rect.w, src->r - src->l, W);
-    MULDIV(&e->src_rect.y, &e->src_rect.h, src->b - src->t, H);
+    // saneamiento mínimo
+    if (e->src_rect.w <= 0 || e->src_rect.h <= 0 ||
+        e->dst_rect.w <= 0 || e->dst_rect.h <= 0) {
+        // marca tamaño cero para que el caller aborte
+        e->src_rect.w = e->src_rect.h = 0;
+        e->dst_rect.w = e->dst_rect.h = 0;
+    }
     if (dev->mFlags & COPYBIT_TRANSFORM_FLIP_V) {
         e->src_rect.y = e->src.height - (e->src_rect.y + e->src_rect.h);
     }
@@ -205,8 +214,11 @@ static void set_infos(struct copybit_context_t *dev, struct mdp_blit_req *req) {
 /** copy the bits */
 static int msm_copybit(struct copybit_context_t *dev, void const *list) 
 {
-    int err = ioctl(dev->mFD, MSMFB_BLIT,
-                    (struct mdp_blit_req_list const*)list);
+    const struct mdp_blit_req_list* L = (const struct mdp_blit_req_list*)list;
+    for (int i=0; i<L->count; ++i)
+        if (!L->req[i].src_rect.w || !L->req[i].src_rect.h ||
+            !L->req[i].dst_rect.w || !L->req[i].dst_rect.h) return -EINVAL;
+    int err = ioctl(dev->mFD, MSMFB_BLIT, L);
     LOGE_IF(err<0, "copyBits failed (%s)", strerror(errno));
     if (err == 0) {
         return 0;

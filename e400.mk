@@ -31,8 +31,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.e0.usb.rc:root/init.e0.usb.rc
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/7k_handset.kl:system/usr/keylayout/7k_handset.kl \
-    $(LOCAL_PATH)/configs/e0_keypad.kl:system/usr/keylayout/e0_keypad.kl \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/configs/AudioFilter.csv:system/etc/AudioFilter.csv \
     $(LOCAL_PATH)/configs/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
@@ -41,6 +39,25 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
 
+# chargermode
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_ani_01.rle:root/chargerimages/battery_ani_01.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_ani_02.rle:root/chargerimages/battery_ani_02.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_ani_03.rle:root/chargerimages/battery_ani_03.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_ani_04.rle:root/chargerimages/battery_ani_04.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_ani_05.rle:root/chargerimages/battery_ani_05.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_bg.rle:root/chargerimages/battery_bg.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_charging_01.rle:root/chargerimages/battery_charging_01.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_charging_02.rle:root/chargerimages/battery_charging_02.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_charging_03.rle:root/chargerimages/battery_charging_03.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_charging_04.rle:root/chargerimages/battery_charging_04.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_charging_05.rle:root/chargerimages/battery_charging_05.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_charging_06.rle:root/chargerimages/battery_charging_06.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_wait_ani_01.rle:root/chargerimages/battery_wait_ani_01.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/battery_wait_ani_02.rle:root/chargerimages/battery_wait_ani_02.rle \
+    $(LOCAL_PATH)/chargemode/chargerimages/black_bg.rle:root/chargerimages/black_bg.rle \
+    $(LOCAL_PATH)/chargemode/chargerlogo:root/sbin/chargerlogo
+    
 $(call inherit-product, build/target/product/full_base.mk)
 
 # Permission files
@@ -59,11 +76,14 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 PRODUCT_PACKAGES += \
-    hwprops
+    lgapversion \
+	hwprops
 
 # Wifi
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wpa_supplicant.conf:system/etc/wifi/wpa_supplicant.conf \
+    $(LOCAL_PATH)/prebuilt/init.qcom.sdio.sh:system/etc/init.qcom.sdio.sh \
+    $(LOCAL_PATH)/prebuilt/librasdioif.ko:system/lib/modules/librasdioif.ko \
     $(LOCAL_PATH)/prebuilt/wlan.ko:system/lib/modules/wlan.ko
 
 # BT
@@ -76,18 +96,16 @@ PRODUCT_COPY_FILES += \
 # HW HALS
 PRODUCT_PACKAGES += \
     libaudio \
-    liboverlay \
-    gralloc.e400 \
+    libcamera \
     copybit.e400 \
-    gps.e400 \
-    charger \
-    charger_res_images
+    gralloc.e400 \
+    gps.e400
 
 # OMX 
-PRODUCT_PACKAGES += \
-    libstagefrighthw \
-    libmm-omxcore \
-    libOmxCore
+# PRODUCT_PACKAGES += \
+#     libstagefrighthw \
+#     libmm-omxcore \
+#     libOmxCore
 
 PRODUCT_LOCALES += ldpi mdpi
 
