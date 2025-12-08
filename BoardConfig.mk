@@ -82,15 +82,6 @@ BOARD_CUSTOM_USB_CONTROLLER := ../../device/lge/e400/UsbController.cpp
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 
 # Wifi related defines
-# BOARD_WLAN_DEVICE := qcwcn
-# WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
-# WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
-# WIFI_EXT_MODULE_NAME := librasdioif
-# WIFI_DRIVER_MODULE_NAME := wlan
-# BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
-# BOARD_WPA_SUPPLICANT_DRIVER := WEXT
-# WPA_SUPPLICANT_VERSION := VER_0_8_X
-# BOARD_WEXT_NO_COMBO_SCAN := true
 BOARD_WLAN_DEVICE := qcwcn
 WIFI_EXT_MODULE_PATH := /system/lib/modules/librasdioif.ko
 WIFI_DRIVER_MODULE_PATH := /system/lib/modules/wlan.ko
@@ -100,6 +91,10 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_wext
 BOARD_WPA_SUPPLICANT_DRIVER := WEXT
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 BOARD_WEXT_NO_COMBO_SCAN := true
+
+HARDWARE_OMX := true
+TARGET_USE_OMX_RECOVERY := true
+BUILD_PV_VIDEO_ENCODERS := 1
 
 WITH_JIT := true
 ENABLE_JSC_JIT := true

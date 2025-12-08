@@ -37,7 +37,8 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
 
 # chargermode
 PRODUCT_COPY_FILES += \
@@ -102,10 +103,9 @@ PRODUCT_PACKAGES += \
     gps.e400
 
 # OMX 
-# PRODUCT_PACKAGES += \
-#     libstagefrighthw \
-#     libmm-omxcore \
-#     libOmxCore
+PRODUCT_PACKAGES += \
+    libmm-omxcore \
+    libOmxCore
 
 PRODUCT_LOCALES += ldpi mdpi
 
