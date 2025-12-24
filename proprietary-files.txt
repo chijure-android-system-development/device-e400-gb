@@ -1,5 +1,6 @@
 lib/hw/lights.msm7k.so
-# lib/hw/gralloc.msm7k.so
+lib/hw/gralloc.msm7k.so
+lib/hw/copybit.msm7k.so
 lib/hw/sensors.default.so
 bin/sensord
 lib/egl/libEGL_adreno200.so
@@ -9,11 +10,13 @@ lib/egl/libq3dtools_adreno200.so
 lib/egl/eglsubAndroid.so
 etc/firmware/yamato_pfp.fw
 etc/firmware/yamato_pm4.fw
+lib/lib_LG_fastaf.so
 lib/libcamera.so
 lib/libOpenVG.so
 lib/libgsl.so
 lib/libmmjpeg.so
 lib/libmmipl.so
+lib/libstagefrighthw.so
 lib/liboemcamera.so
 lib/libchromatix_hi542_preview.so
 etc/firmware/wlan/volans/WCN1314_cfg.dat

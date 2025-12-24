@@ -1219,7 +1219,9 @@ bool QualcommCameraHardware::startCamera()
     *(void **)&LINK_camframe_timeout_callback =
         ::dlsym(libmmcamera, "camframe_timeout_callback");
 
-    *LINK_camframe_timeout_callback = receive_camframetimeout_callback;
+    if (LINK_camframe_timeout_callback) {
+        *LINK_camframe_timeout_callback = receive_camframetimeout_callback;
+    }
 
     // 720 p new recording functions
     *(void **)&LINK_cam_frame_flush_free_video = ::dlsym(libmmcamera, "cam_frame_flush_free_video");
@@ -1227,7 +1229,9 @@ bool QualcommCameraHardware::startCamera()
     *(void **)&LINK_camframe_free_video = ::dlsym(libmmcamera, "cam_frame_add_free_video");
 
     *(void **)&LINK_camframe_video_callback = ::dlsym(libmmcamera, "mmcamera_camframe_videocallback");
+    if (LINK_camframe_video_callback) {
         *LINK_camframe_video_callback = receive_camframe_video_callback;
+    }
 
     *(void **)&LINK_mmcamera_shutter_callback =
         ::dlsym(libmmcamera, "mmcamera_shutter_callback");

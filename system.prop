@@ -9,12 +9,13 @@ debug.enabletr=false
 debug.composition.type=mdp
 ro.opengles.version=131072
 com.qc.hardware=true
-ro.sf.compbypass.enable=0
+ro.sf.compbypass.enable
 
 persist.sys.use_dithering=1
 
 wifi.interface=wlan0
 
+# Using patched libril-qc-1.so from CM9 (no OMADRM symbols in libutils needed)
 rild.libpath=/system/lib/libril-qc-1.so
 rild.libargs=-d /dev/smd0
 persist.rild.nitz_plmn=

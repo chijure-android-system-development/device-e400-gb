@@ -11,7 +11,7 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heapstartsize=5m \
     dalvik.vm.heapgrowthlimit=32m \
-    dalvik.vm.heapsize=76m
+    dalvik.vm.heapsize=48m
 
 PRODUCT_AAPT_CONFIG := normal mdpi ldpi
 PRODUCT_AAPT_PREF_CONFIG := ldpi
@@ -33,12 +33,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/vold.fstab:system/etc/vold.fstab \
     $(LOCAL_PATH)/configs/AudioFilter.csv:system/etc/AudioFilter.csv \
-    $(LOCAL_PATH)/configs/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt
+    $(LOCAL_PATH)/configs/AutoVolumeControl.txt:system/etc/AutoVolumeControl.txt \
+    $(LOCAL_PATH)/egl.cfg:system/lib/egl/egl.cfg
 
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml
+    $(LOCAL_PATH)/configs/media_profiles.xml:system/etc/media_profiles.xml
 
 # chargermode
 PRODUCT_COPY_FILES += \
@@ -98,8 +98,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libaudio \
     libcamera \
-    copybit.e400 \
-    gralloc.e400 \
     gps.e400
 
 # OMX 
@@ -109,7 +107,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_LOCALES += ldpi mdpi
 
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
+
 PRODUCT_NAME := e400
 PRODUCT_DEVICE := e400
 PRODUCT_MODEL := LG-E400

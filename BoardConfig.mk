@@ -5,6 +5,9 @@ COPYBIT_MSM7K := true
 # inherit from the proprietary version
 -include vendor/lge/e400/BoardConfigVendor.mk
 
+# Use device-specific system properties (includes correct RIL lib path)
+TARGET_SYSTEM_PROP := device/lge/e400/system.prop
+
 TARGET_NO_BOOTLOADER := true
 # Info abt chipset(msm7x27a)
 TARGET_BOARD_PLATFORM := msm7k
@@ -62,6 +65,8 @@ TARGET_USES_16BPPSURFACE_FOR_OPAQUE := true
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 BOARD_AVOID_DRAW_TEXTURE_EXTENSION := true
 BOARD_EGL_CFG := device/lge/e400/egl.cfg
+
+QCOM_HARDWARE := true
 
 BOARD_HAVE_BLUETOOTH := true
 
