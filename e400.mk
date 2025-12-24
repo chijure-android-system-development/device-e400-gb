@@ -77,8 +77,7 @@ PRODUCT_COPY_FILES += \
     frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml
 
 PRODUCT_PACKAGES += \
-    lgapversion \
-	hwprops
+    hwprops
 
 # Wifi
 PRODUCT_COPY_FILES += \
